@@ -1,11 +1,16 @@
 get '/' do
-  # Look in app/views/index.erb
+  @posts = Post.order(:created_at).reverse_order
   erb :index
 end
 
 get '/login' do
 
   erb :login
+end
+
+get '/logout' do
+  session[:user_id] = nil
+  redirect to "/login"
 end
 
 get '/profile/:user_id' do
@@ -20,18 +25,19 @@ get '/profile/:user_id' do
 end
 
 get '/post/:post_id' do
+  @post = Post.find_by_id(params[:post_id])
 
   erb :post
 end
 
 post '/login' do
-  @current_user = User.authenticate(params[:user][:name], params[:user][:password])
+  @current_user = User.authenticate(params[:user][:username], params[:user][:password])
   if @current_user
-    session[:id] = @current_user.id
+    session[:user_id] = @current_user.id
     redirect "/profile/#{@current_user.id}"
   else
-    #@errors
-    redirect '/login'
+    @errors_login = true
+    erb :login
   end
 end
 
@@ -42,10 +48,19 @@ post '/register' do
     session[:user_id] = user.id
   redirect "/profile/#{user.id}"
   else
-    #@errors
-    redirect "/login"
+    @errors_create = user.errors.messages
+    erb :login
   end
 end
 
+post '/comment/:post_id' do
+  Comment.create(:body => params[:body], :user_id => session[:user_id], :post_id => params[:post_id])
+  redirect "/post/#{params[:post_id]}"
+end
 
+post '/new_post' do
+  Post.create(title: params[:title], content: params[:content], user_id: session[:user_id])
+
+  redirect "/"
+end
 

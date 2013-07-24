@@ -1,16 +1,28 @@
 <div class="container">
   <h3>Login</h3>
     <form action="/login" method="post">
-      <label>Username: </label><input type="text" name="user[name]" placeholder="Enter a username"><br>
+      <label>Username: </label><input type="text" name="user[username]" placeholder="Enter a username"><br>
       <label>Password: </label><input type="password" name="user[password]" placeholder="Password">
       <input type="submit" value="Login">
-    </form>
+      <% if @errors_login %>
+          <ul>
+            <li>Either the Username or password are invalid!</li>
+          </ul>
+      <% end %>
+    </form> <br>
 
 
   <h3>Sign Up</h3>
     <form action="/register" method="post">
-      <label>Username: </label><input type="text" name="user[name]" placeholder="Enter a username"><br>
+      <label>Username: </label><input type="text" name="user[username]" placeholder="Enter a username"><br>
       <label>Password: </label><input type="password" name="user[password]" placeholder="Password">
       <input type="submit" value="Sign Up">
+      <% if @errors_create %>
+        <% @errors_create.each do |key, error| %>
+          <ul>
+            <li><%=key%>: <%=error.first %></li>
+          </ul>
+        <% end %>
+      <% end %>
     </form>
 </div>

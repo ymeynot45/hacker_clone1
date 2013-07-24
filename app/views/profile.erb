@@ -2,6 +2,17 @@
 
 <h2><%= @user_page.username  %></h2>
 
+<% if current_user.id == @user_page.id %>
+    <div class="new_post">
+  <h3>Author a new post</h3>
+  <form action="/new_post" method="post" id="new_post">
+    <input type="text" name="title" placeholder="Title"><br>
+    <textarea maxlength="350" form="new_post" cols="50" rows="5" name="content"placeholder="No swearing please!"></textarea><br>
+  <input type="submit" value="Submit">
+  </form>
+</div>
+<% end %>
+
 <div class="user_posts"  >
   <h3>Posts</h3>
     <% if  @posts.count > 0%>

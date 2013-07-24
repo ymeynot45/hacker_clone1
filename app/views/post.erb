@@ -1,0 +1,29 @@
+<h1><%= @post.title %></h1>
+<h3>By <%= @post.user.username %></h3>
+<h5>on <%= @post.created_at.strftime("%b. %d, %Y") %></h5>
+<div class="post_body">
+  <p><%= @post.content %></p>
+</div>
+
+<hr>
+
+<% if current_user%>
+<div class="new_comment">
+  <h3>Enter a comment</h3>
+  <form action="/comment/<%= @post.id %>" method="post" id="new_comment">
+    <textarea maxlength="350" form="new_comment" cols="50" rows="5" name="body"placeholder="No swearing please!"></textarea><br>
+  <input type="submit" value="Submit">
+  </form>
+</div>
+<% else %>
+  <p><a href="/login">Login</a> to leave a comment.</p>
+<% end %>
+
+<h4>Past Comments</h4>
+<div class="comments">
+  <% @post.comments.each do |comment| %>
+    <ul>
+      <li><%= comment.body %><br> - <%= comment.user.username%> on <%= comment.created_at.strftime("%b. %d, %Y")%> </li>
+    </ul>
+  <% end %>
+</div>

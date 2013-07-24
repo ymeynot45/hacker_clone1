@@ -1,3 +1,8 @@
 <div class="container">
-  
+  <h3>Posts</h3>
+  <% @posts.each do |post| %>
+     <ul>
+       <li><a href="/post/<%=post.id%>"><%=post.title%></a><br> By <a href="/profile/<%=post.user.id%>"><%= post.user.username %></a> on <%= post.created_at.strftime("%b. %d, %Y") %></li>
+     </ul>
+  <% end %>
 </div>

@@ -29,25 +29,25 @@ Comment.create(
               )
 
 Comment.create(
-              body: "Number 1",
+              body: "Number 2",
               user_id: rand(1..2),
               post_id: rand(1..3)
               )
 
 Comment.create(
-              body: "Number 1",
+              body: "Number 3",
               user_id: rand(1..2),
               post_id: rand(1..3)
               )
 
 Comment.create(
-              body: "Number 1",
+              body: "Number 4",
               user_id: rand(1..2),
               post_id: rand(1..3)
               )
 
 Comment.create(
-              body: "Number 1",
+              body: "Number 5",
               user_id: rand(1..2),
               post_id: rand(1..3)
               )

@@ -30,6 +30,12 @@ get '/post/:post_id' do
   erb :post
 end
 
+
+post '/comment/:post_id' do
+  Comment.create(:body => params[:body], :user_id => session[:user_id], :post_id => params[:post_id])
+  redirect "/post/#{params[:post_id]}"
+end
+
 post '/login' do
   @current_user = User.authenticate(params[:user][:username], params[:user][:password])
   if @current_user
@@ -39,6 +45,12 @@ post '/login' do
     @errors_login = true
     erb :login
   end
+end
+
+post '/new_post' do
+  Post.create(title: params[:title], content: params[:content], user_id: session[:user_id])
+
+  redirect "/"
 end
 
 post '/register' do
@@ -53,14 +65,11 @@ post '/register' do
   end
 end
 
-post '/comment/:post_id' do
-  Comment.create(:body => params[:body], :user_id => session[:user_id], :post_id => params[:post_id])
-  redirect "/post/#{params[:post_id]}"
+post '/vote/:post_id' do
+  if params[:vote] == "Thumbs Up"
+    PostVote.create(user_id: session[:user_id], post_id: params[:post_id], upvote: 1)
+  elsif params[:vote] == "Thumbs Down"
+    PostVote.create(user_id: session[:user_id], post_id: params[:post_id], downvote: 1)
+  end
+  redirect to "/post/#{params[:post_id]}"
 end
-
-post '/new_post' do
-  Post.create(title: params[:title], content: params[:content], user_id: session[:user_id])
-
-  redirect "/"
-end
-

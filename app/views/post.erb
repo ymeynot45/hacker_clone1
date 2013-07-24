@@ -1,10 +1,18 @@
 <h1><%= @post.title %></h1>
 <h3>By <%= @post.user.username %></h3>
 <h5>on <%= @post.created_at.strftime("%b. %d, %Y") %></h5>
+<br>
+
 <div class="post_body">
   <p><%= @post.content %></p>
 </div>
-
+<p> Score: Up Votes[<%= @post.post_votes.where("upvote > 0").count %>], Down Votes[<%= @post.post_votes.where("downvote > 0").count %>] </p>
+<div class="voting">
+  <form action="/vote/<%=@post.id%>" method='post'>
+    <button type="submit" value="Thumbs Up" name="vote" id="upvote">Thumbs Up</button>
+    <button type="submit" value="Thumbs Down" name="vote" id="downvote">Thumbs Down</button>
+  </form>
+</div>
 <hr>
 
 <% if current_user%>

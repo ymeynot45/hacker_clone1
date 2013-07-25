@@ -66,7 +66,13 @@ post '/register' do
 end
 
 post '/vote/:post_id' do
-  if params[:vote] == "Thumbs Up"
+  if request.xhr?
+    if "Thumbs Up"
+      #something
+    elsif "Thumbs Down"
+      #something
+    end
+  elsif params[:vote] == "Thumbs Up"
     PostVote.create(user_id: session[:user_id], post_id: params[:post_id], upvote: 1)
   elsif params[:vote] == "Thumbs Down"
     PostVote.create(user_id: session[:user_id], post_id: params[:post_id], downvote: 1)

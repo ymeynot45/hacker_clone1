@@ -2,7 +2,11 @@
   <h3>Posts</h3>
   <% @posts.each do |post| %>
      <ul>
-       <li><a href="/post/<%=post.id%>"><%=post.title%></a><br> By <a href="/profile/<%=post.user.id%>"><%= post.user.username %></a> on <%= post.created_at.strftime("%b. %d, %Y") %></li>
+       <li><a href="/post/<%=post.id%>"><%=post.title%></a> - Score: <%= post.post_votes.where("upvote > 0").count - post.post_votes.where("downvote > 0").count %><br> By <a href="/profile/<%=post.user.id%>"><%= post.user.username %></a> on <%= post.created_at.strftime("%b. %d, %Y") %></li>
      </ul>
+
   <% end %>
 </div>
+
+
+
